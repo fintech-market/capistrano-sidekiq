@@ -103,7 +103,13 @@ namespace :sidekiq do
             git_plugin.delete_systemd_config_symlink(process)
           end
         end
-        execute :sudo, :rm, '-f', File.join(
+        execute_array =
+          if fetch(:sidekiq_service_unit_user) == :system
+            [:sudo, :rm]
+          else
+            [:rm]
+          end
+        execute *execute_array, '-f', File.join(
           fetch(:service_unit_path, git_plugin.fetch_systemd_unit_path),
           git_plugin.sidekiq_service_file_name
         )

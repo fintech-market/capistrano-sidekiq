@@ -63,6 +63,13 @@ Configurable options - Please ensure you check your version's branch for the ava
 ```
 See `capistrano/sidekiq/helpers.rb` for other undocumented configuration settings.
 
+### Systemd with multiple processes
+
+When you are upgrading from `1` process to multiple processes or decreasing processes count,
+then you have run `sidekiq:uninstall` before changes, and when changes are done run `sidekiq:install` and `sidekiq:start`.
+
+When current processes count is at least `2` and you are increasing the count, then `sidekiq:uninstall` is not needed.
+
 ## Bundler
 
 If you'd like to prepend `bundle exec` to your sidekiq and sidekiqctl calls, modify the SSHKit command maps
